@@ -1,12 +1,46 @@
-# React + Vite
+# 🌐 Yuyariy Frontend – Plataforma de Lectura Crítica y Comparación de Noticias
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow)
+![Frontend](https://img.shields.io/badge/frontend-React-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-Currently, two official plugins are available:
+## 📖 Descripción del Proyecto  
+**Yuyariy** es una plataforma digital innovadora que fomenta la **lectura crítica** y reduce el **sesgo de confirmación** en los usuarios.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este repositorio corresponde al **Frontend** de la aplicación, desarrollado con **React** como **PWA (Progressive Web App)**.  
 
-## Expanding the ESLint configuration
+### ✨ Funcionalidades principales del frontend:
+- Interfaz web responsiva y accesible.  
+- Visualización de noticias con **comparación entre medios**.  
+- Integración con **API backend** para análisis de sesgo.  
+- Diccionario contextual para términos complejos.  
+- Preguntas de reflexión al final de cada noticia.  
+- Sistema de alertas y notificaciones personalizadas.  
+- Modo offline con opción de **“guardar para después”**.  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tecnologías Utilizadas
+- [React](https://react.dev/) – Librería principal para el frontend.  
+- [Vite](https://vitejs.dev/) – Bundler y entorno de desarrollo rápido.  
+- [Tailwind CSS](https://tailwindcss.com/) – Estilos modernos y responsivos.  
+- [React Router](https://reactrouter.com/) – Navegación de la aplicación.  
+- [Axios](https://axios-http.com/) – Cliente HTTP para consumir el backend.  
+- [PWA Support](https://web.dev/progressive-web-apps/) – Compatibilidad con apps instalables.  
+
+---
+
+## 📂 Estructura del Proyecto
+```bash
+yuyariy-frontend/
+├── public/             # Archivos estáticos
+├── src/
+│   ├── assets/         # Imágenes, íconos
+│   ├── components/     # Componentes reutilizables
+│   ├── pages/          # Páginas principales (Home, Noticias, Comparador)
+│   ├── services/       # Conexiones API (Axios)
+│   ├── hooks/          # Hooks personalizados
+│   ├── styles/         # Configuración de Tailwind u otros estilos
+│   └── App.jsx         # Punto de entrada principal
+├── package.json
+└── README.md
