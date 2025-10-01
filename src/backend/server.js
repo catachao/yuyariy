@@ -2,10 +2,15 @@
 import express from "express";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import cors from "cors"
 
 dotenv.config();
 
-const app = express();
+const app = express()
+app.use(cors())
+app.use(cors({
+  origin: "http://localhost:3001"
+}))
 const PORT = process.env.PORT || 3000;
 
 // ===== CONFIG MONGO =====
@@ -38,6 +43,25 @@ app.get("/groupnotices", async (req, res) => {
     res.json(docs);
   } catch (err) {
     console.error("❌ Error al obtener documentos:", err);
+    res.status(500).json({ error: "Error al obtener documentos" });
+  }
+});
+
+app.get("/groupnotices/:cluster", async (req, res) => {
+  try {
+    const { cluster } = req.params;
+    const collection = db.collection(COLLECTION_NAME);
+
+    // El campo cluster es numérico, convertimos el param
+    const docs = await collection.find({ cluster: Number(cluster) }).toArray();
+
+    if (!docs || docs.length === 0) {
+      return res.status(404).json({ message: `No se encontraron documentos para el cluster ${cluster}` });
+    }
+
+    res.json(docs);
+  } catch (err) {
+    console.error("❌ Error al obtener documentos por cluster:", err);
     res.status(500).json({ error: "Error al obtener documentos" });
   }
 });
