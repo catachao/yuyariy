@@ -19,12 +19,11 @@
 | 2.5    | Ejecución de Pruebas Unitarias / Integración                 | 50           | 55                 | 0                       | 0                    | 0                 | **2,750**  |
 |        | **Subtotal**                                                 | **370**      |                    | **800**                 |                      |                   | **24,650** |
 | **3**  | **Entrega del Proyecto**                                     |              |                    |                         |                      |                   |            |
-| 3.1    | Configurar Infraestructura AWS (EC2, Lambda, S3, CloudFront) | 30           | 70                 | 0                       | 0                    | 0                 | **100**    |
-| 3.2    | Entrenar clientes (Talleres y Documentación)                 | 24           | 50                 | 300                     | 150                  | 0                 | **1,650**  |
-| 3.3    | Pruebas de Aceptación del Desempeño                          | 20           | 60                 | 0                       | 0                    | 0                 | **1,200**  |
-| 3.4    | Revisión del Desempeño Post Proyecto                         | 16           | 60                 | 0                       | 0                    | 0                 | **960**    |
-| 3.5    | Proveer Soporte                                              | 40           | 55                 | 0                       | 0                    | 0                 | **2,200**  |
-| 3.6    | Documentación Final                                          | 10           | 50                 | 0                       | 0                    | 0                 | **500**    |
+| 3.1    | Entrenar clientes (Talleres y Documentación)                 | 24           | 50                 | 300                     | 150                  | 0                 | **1,650**  |
+| 3.2    | Pruebas de Aceptación del Desempeño                          | 20           | 60                 | 0                       | 0                    | 0                 | **1,200**  |
+| 3.3    | Revisión del Desempeño Post Proyecto                         | 16           | 60                 | 0                       | 0                    | 0                 | **960**    |
+| 3.4    | Proveer Soporte                                              | 40           | 55                 | 0                       | 0                    | 0                 | **2,200**  |
+| 3.5    | Documentación Final                                          | 10           | 50                 | 0                       | 0                    | 0                 | **500**    |
 |        | **Subtotal**                                                 | **140**      |                    | **300**                 | **150**              |                   | **6,610**  |
 | **9**  | **Gerencia del Proyecto**                                    |              |                    |                         |                      |                   |            |
 | 9.1    | Reuniones/Reportes de Progreso                               | 20           | 80                 | 0                       | 100                  | 0                 | **1,700**  |
@@ -244,4 +243,5 @@ Para ajustar a **S/ 48,000**, se recomiendan las siguientes estrategias:
 - Fase 1 (MVP): S/ 48,000
 - Fase 2 (Features avanzados): S/ 23,885 (post-validación)
 - **Distribución de riesgo y validación temprana**
+
 
