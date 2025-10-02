@@ -35,12 +35,11 @@
 | 9.7    | Gestión Global del Proyecto                                  | 30           | 80                 | 0                       | 0                    | 0                 | **2,400**  |
 |        | **Subtotal**                                                 | **123**      |                    |                         | **180**              |                   | **8,220**  |
 | **10** | **Otros Costos**                                             |              |                    |                         |                      |                   |            |
-| 10.1   | Infraestructura AWS (4 meses: desarrollo + 1 mes inicial)    | 0            | 0                  | 0                       | 0                    | 2,800             | **2,800**  |
-| 10.2   | Licencias y Herramientas de Desarrollo                       | 0            | 0                  | 0                       | 0                    | 800               | **800**    |
-| 10.3   | Servicios de APIs Externas (NewsAPI, MediaStack)             | 0            | 0                  | 0                       | 0                    | 600               | **600**    |
-| 10.4   | Dominio y Certificados SSL                                   | 0            | 0                  | 0                       | 0                    | 150               | **150**    |
-| 10.5   | Herramientas de Testing y QA                                 | 0            | 0                  | 0                       | 0                    | 300               | **300**    |
-| 10.6   | Material de Marketing y Difusión                             | 0            | 0                  | 500                     | 0                    | 0                 | **500**    |
+| 10.1   | Licencias y Herramientas de Desarrollo                       | 0            | 0                  | 0                       | 0                    | 800               | **800**    |
+| 10.2   | Servicios de APIs Externas (NewsAPI, MediaStack)             | 0            | 0                  | 0                       | 0                    | 600               | **600**    |
+| 10.3   | Dominio y Certificados SSL                                   | 0            | 0                  | 0                       | 0                    | 150               | **150**    |
+| 10.4   | Herramientas de Testing y QA                                 | 0            | 0                  | 0                       | 0                    | 300               | **300**    |
+| 10.5   | Material de Marketing y Difusión                             | 0            | 0                  | 500                     | 0                    | 0                 | **500**    |
 |        | **Subtotal**                                                 | **0**        |                    | **500**                 |                      | **4,650**         | **5,150**  |
 | **11** | **Otros Costos Administrativos**                             |              |                    |                         |                      |                   |            |
 | 11.1   | Gastos Legales y Constitución                                | 0            | 0                  | 0                       | 0                    | 400               | **400**    |
@@ -245,3 +244,4 @@ Para ajustar a **S/ 48,000**, se recomiendan las siguientes estrategias:
 - Fase 1 (MVP): S/ 48,000
 - Fase 2 (Features avanzados): S/ 23,885 (post-validación)
 - **Distribución de riesgo y validación temprana**
+
