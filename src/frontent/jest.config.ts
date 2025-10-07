@@ -16,6 +16,10 @@ const config: Config = {
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   preset: 'ts-jest',
+  testMatch: [
+    '<rootDir>/**/__tests__/**/*.[jt]s?(x)',
+    '<rootDir>/**/*.(spec|test).[jt]s?(x)',
+  ],
 }
  
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
