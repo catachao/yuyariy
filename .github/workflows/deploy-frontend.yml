@@ -20,19 +20,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 1️⃣ Install pnpm first
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      # 2️⃣ Setup Node.js (without cache here)
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3️⃣ Manually configure pnpm store cache
       - name: Cache pnpm store
         uses: actions/cache@v4
         with:
@@ -41,19 +38,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
-      # 4️⃣ Install dependencies
       - name: Install dependencies
         working-directory: src/frontend
         run: pnpm install --frozen-lockfile
 
-      # 5️⃣ Build and export static site
-      - name: Build and export static site
+      - name: Build static site
         working-directory: src/frontend
         run: |
           pnpm run build
-          pnpm exec next export
 
-      # 6️⃣ Deploy to S3
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
@@ -65,7 +58,6 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: src/frontend/out
 
-      # 7️⃣ Invalidate CloudFront cache
       - name: Invalidate CloudFront cache
         uses: chetan/invalidate-cloudfront-action@v2
         with:
