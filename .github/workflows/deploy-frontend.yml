@@ -20,27 +20,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug folder structure
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Files:"
-          ls -R
-
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9 # or whatever version you use
 
       - name: Install dependencies
         working-directory: src/frontend
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build and export static site
-        working-directory: src/frontent
+        working-directory: src/frontend
         run: |
-          npm run build
-          npx next export
+          pnpm run build
+          pnpm exec next export
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
