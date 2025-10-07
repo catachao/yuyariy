@@ -23,12 +23,15 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       # Solo para verificar la estructura
       - name: Check repo structure
         run: ls
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
         working-directory: src/frontent
 
       - name: Run tests (with verbose output)
