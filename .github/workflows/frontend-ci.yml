@@ -4,10 +4,10 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - "app/src/frontent/**"
+      - "src/frontent/**"
   pull_request:
     paths:
-      - "app/src/frontent/**"
+      - "src/frontent/**"
 
 jobs:
   test:
