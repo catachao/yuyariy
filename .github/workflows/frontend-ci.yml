@@ -29,8 +29,8 @@ jobs:
 
       - name: Install dependencies
         run: pnpm ci
-        working-directory: src/frontend
+        working-directory: src/frontent
 
       - name: Run tests
         run: pnpm run test
-        working-directory: src/frontend
+        working-directory: src/frontent
