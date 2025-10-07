@@ -39,6 +39,6 @@ jobs:
       - name: Run tests (with verbose output)
         run: |
           echo "=== Running frontend tests ==="
-          pnpm run test -- --verbose || true
+          pnpm run test
         working-directory: src/frontent
         
