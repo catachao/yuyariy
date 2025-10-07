@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Build and export static site
-        working-directory: src/frontend
+        working-directory: src/frontent
         run: |
           npm run build
           npx next export
