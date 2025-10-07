@@ -16,7 +16,6 @@ const config: Config = {
     '^@/(.*)$': '<rootDir>/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  preset: 'ts-jest',
   testMatch: [
     '<rootDir>/**/__tests__/**/*.[jt]s?(x)',
     '<rootDir>/**/*.(spec|test).[jt]s?(x)',
