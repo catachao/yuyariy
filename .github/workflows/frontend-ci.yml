@@ -4,10 +4,10 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - "app/src/frontent/**"
+      - "src/frontent/**"
   pull_request:
     paths:
-      - "app/src/frontent/**"
+      - "src/frontent/**"
   workflow_dispatch:
 
 jobs:
@@ -23,11 +23,14 @@ jobs:
         with:
           node-version: 20
 
+      # Solo para verificar la estructura
+      - name: Check repo structure
+        run: ls -R src
+
       - name: Install dependencies
         run: pnpm ci
+        working-directory: src/frontend
 
       - name: Run tests
         run: pnpm run test
-
-      - name: Build app (optional)
-        run: pnpm run build
+        working-directory: src/frontend
