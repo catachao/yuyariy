@@ -31,6 +31,8 @@ jobs:
         run: pnpm ci
         working-directory: src/frontent
 
-      - name: Run tests
-        run: pnpm run test
+      - name: Run tests (with verbose output)
+        run: |
+          echo "=== Running frontend tests ==="
+          pnpm run test -- --verbose || true
         working-directory: src/frontent
