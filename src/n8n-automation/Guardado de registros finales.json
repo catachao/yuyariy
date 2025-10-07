@@ -1,0 +1,1494 @@
+{
+  "name": "Guardado de registros finales",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        -400
+      ],
+      "id": "f650bb71-dd2c-457b-8449-646f04912f3b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "collection": "titles",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        -464,
+        -400
+      ],
+      "id": "98a9d9cc-f90e-49a4-83dd-286750ebdc6f",
+      "name": "Find documents",
+      "credentials": {
+        "mongoDb": {
+          "id": "44uvjFS2nQmOBnWb",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dcbb720e-e03d-432b-a73a-ad5b0787502c",
+              "name": "_id",
+              "value": "={{ $json._id }}",
+              "type": "string"
+            },
+            {
+              "id": "32aec684-61a4-4696-9bac-008481b96d27",
+              "name": "text",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "af72be58-c30c-4649-92b6-5eaac36846bd",
+              "name": "cluster",
+              "value": "={{ $json.cluster }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        -400
+      ],
+      "id": "78db728d-51ae-4679-b9af-433431b2f2a0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4dd790eb-4486-4553-a23c-f3f23f0f2a55",
+              "leftValue": "={{ $json.cluster }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -48,
+        -400
+      ],
+      "id": "61d15973-cef4-4adc-8e53-7d208bccaa68",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        192,
+        -304
+      ],
+      "id": "9f18fe4a-8cff-4985-a460-302d60cdd8ec",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "collection": "urls",
+        "options": {},
+        "query": "={\"title\": \"{{ $json.text }}\"} "
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -304
+      ],
+      "id": "c86efcda-f461-4feb-af29-30326f6a3f48",
+      "name": "Find documents1",
+      "credentials": {
+        "mongoDb": {
+          "id": "44uvjFS2nQmOBnWb",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ef8ab112-90d1-459e-b131-145127a8acaa",
+              "name": "cluster",
+              "value": "={{ $('Remove Duplicates').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "093d3b44-acd7-43ff-8087-7cb1727b5e3b",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "7a44f2f0-be87-406d-968c-7526b4ffc2b9",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -304
+      ],
+      "id": "faf9b973-2438-4b7f-9e9a-69e678e5cd69",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "notice",
+        "fields": "cluster,link,title,contenido",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        2304,
+        -320
+      ],
+      "id": "3bbb301d-3fec-4f08-aa6e-df85e3d7c3c4",
+      "name": "Insert documents",
+      "credentials": {
+        "mongoDb": {
+          "id": "44uvjFS2nQmOBnWb",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "exitosanoticias.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "702ea433-c72a-4e48-804e-b8f703f14cfb"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "exitosa"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6d23dae7-49a4-4766-ae75-fc39651a1bb3",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "panamericana.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "panamericana"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "870ebcf7-3a78-4e81-8943-e89798332ba5",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "larepublica.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "larepublica"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a6a74d3f-2388-4356-8f99-a82379dc003d",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "rpp.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "rpp"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9a2e3dfe-690c-4a59-8fe0-757f423927a0",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "eltiempo.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "eltiempo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cbe0942f-cbd3-4ce7-b9f3-c1abe8947ee1",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "diariocorreo.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "diariocorreo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "67f357a4-6b69-489b-93bf-14a55652ee63",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "peru21.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "peru21"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e00a373b-a5c9-4e81-8a58-a49eda81480f",
+                    "leftValue": "={{ $json.link }}",
+                    "rightValue": "elcomercio.pe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "elcomercio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        784,
+        -400
+      ],
+      "id": "88e083a4-0b89-43a5-a80c-b4771aaa717f",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        -976
+      ],
+      "id": "afaf2157-1a0f-49e2-b6c3-706bbb962e9a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        -768
+      ],
+      "id": "07c23046-7d7d-4d8e-a4c0-475484e8571b",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        -576
+      ],
+      "id": "f789b7bc-2d20-4ca9-8fa7-3fe431327e74",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        -384
+      ],
+      "id": "e589ef47-e180-45e5-9a95-3a30c1bae2a3",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        -192
+      ],
+      "id": "0202a7f4-8857-41cb-8b3b-6f38853880c3",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        0
+      ],
+      "id": "06750719-03dc-40a8-be44-6ff70c5a28c2",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        192
+      ],
+      "id": "c130e278-6477-4c88-8667-d947d7ee7976",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1264,
+        400
+      ],
+      "id": "e6dfd48d-7053-412f-a156-f884ad7cb996",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".content",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        -976
+      ],
+      "id": "f4f4ae5d-4ff1-49bb-a8a9-a8ff11af34b1",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".nota",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        -768
+      ],
+      "id": "778a8009-1b6f-4ac1-8cd9-d3f2556fa485",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".MainContent_main__body__i6gEa",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        -576
+      ],
+      "id": "f19b9fbd-d315-4735-b074-02636e5d4fa5",
+      "name": "HTML2"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".body",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        -384
+      ],
+      "id": "3ef48f15-6001-4a8d-ae41-ebea150d045f",
+      "name": "HTML3"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".et_pb_post_content",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        -192
+      ],
+      "id": "a9075881-877b-4606-8495-7f42cb999df3",
+      "name": "HTML4"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".story-contents__content  ",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        0
+      ],
+      "id": "1dc6902c-8b5a-455f-bae4-e0076cb3dc22",
+      "name": "HTML5"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".content",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        192
+      ],
+      "id": "47bf672c-eb78-436c-82e5-74359baf6211",
+      "name": "HTML6"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "contenido",
+              "cssSelector": ".story-contents__content",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        400
+      ],
+      "id": "eade75ad-5232-4cc4-8157-93c21edf372e",
+      "name": "HTML7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e68fc2f8-3d2d-4a5a-9832-e77ab6c71930",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "beaccc42-555c-4620-945c-9cf9aa325acd",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "c21e8632-c55a-4bf1-9215-8bf7853208ba",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "d8a962e6-425e-4b0b-9a62-ac7c12191f66",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -976
+      ],
+      "id": "3a29483f-6693-4d2e-ae0e-3e25245ebd17",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5d98b49a-2f9e-477c-b5b1-a934e2c07202",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "46ff0110-6381-492e-89e1-bedbd169ea55",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "c9f7fd0d-084c-492d-b55f-86c652aa64b3",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "9c34019b-08a1-4f0d-bebb-9df6ffec1f6e",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -768
+      ],
+      "id": "fd33de41-f5c7-4d20-871c-7dd7d56e079c",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "71ba1ed8-dc5e-4b2c-a0d6-919392dcb019",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "bb7d722f-f0a4-4dda-bb21-1d0ddced7b32",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "7bd30d21-47db-42c0-b290-8ab3e42807db",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "03f29bb9-7a08-447c-be33-cf9a444d8b7d",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -576
+      ],
+      "id": "44617746-80f6-4269-a83f-6a477c288fa5",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9073b252-ca82-476a-ba80-c9db8c57cca5",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "f4c65d61-27aa-4502-bf63-05a825c2d8d4",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "9d630e23-5714-45eb-bae1-09dcaae1eb62",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "d8026c61-c48e-4113-bc3b-d3bb4429a434",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -384
+      ],
+      "id": "c909c57f-5a16-43b0-a7e7-89cad8addb78",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c33ecaa9-647f-420b-8864-058fa4bb6879",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "442da4ae-5ba2-4488-abb1-90b3ee9c5200",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "2251a9ed-6c3f-441d-bdfe-0e462b0cdcb4",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "043d7af7-0e94-4126-82be-df8acf99ebde",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -192
+      ],
+      "id": "999c2e04-4137-4b09-b9ca-a4220543dbd9",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1f02728-9806-4069-aeaf-37cfaa4026f0",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "fe2f6727-42b3-4ce9-8527-0eb1f69d7af7",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "a11fc34d-b3cb-4377-b658-30901c0e0f08",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "ec70f378-908c-4db8-84da-0efc1c5c0e3f",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        0
+      ],
+      "id": "5bfe1ce0-b350-48cd-a27d-ee3c3201f0f5",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "076f3f39-2fbf-4f45-ae6e-a18d6f11780a",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "8426795b-2cf8-4967-b36f-5142a5d6ce32",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "8dd25209-d129-4bfe-a449-6b41bd859721",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "593bd68a-6776-4501-a5f8-2320da46451c",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        192
+      ],
+      "id": "62fc687d-99c2-48f6-a9de-0a26288e6405",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dfd300ec-5dea-4042-bfd8-0442a7334679",
+              "name": "cluster",
+              "value": "={{ $('Edit Fields1').item.json.cluster }}",
+              "type": "number"
+            },
+            {
+              "id": "b27da84e-ee48-4016-9561-b44b8a350473",
+              "name": "link",
+              "value": "={{ $('Edit Fields1').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "4bd7b477-9916-46e6-bab3-f85d779cbbf8",
+              "name": "title",
+              "value": "={{ $('Edit Fields1').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "7635ea88-f5b9-4965-b776-a50b47827b6c",
+              "name": "contenido",
+              "value": "={{ $json.contenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        400
+      ],
+      "id": "efb27dad-d1b6-4616-aea3-65f4f8605e09",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "numberInputs": 8
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1936,
+        -416
+      ],
+      "id": "41525553-8640-4db4-a0e4-41de9a47f4c5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "removeItemsSeenInPreviousExecutions",
+        "dedupeValue": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        2112,
+        -320
+      ],
+      "id": "d0cf2f38-d996-47c5-ae58-6432e472a1c7",
+      "name": "Remove Duplicates2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Find documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find documents": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Find documents1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find documents1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTML2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTML3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "HTML4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "HTML5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "HTML6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "HTML7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates2": {
+      "main": [
+        [
+          {
+            "node": "Insert documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2b651c78-f5a3-4326-8d0c-0870d51bdc42",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dfaa74a960087ae3552b3afefc7f485f943206154cf5ae1a987fac010cf80f86"
+  },
+  "id": "zrDmW3amwFtjzQEB",
+  "tags": []
+}
