@@ -29,7 +29,7 @@ jest.mock('lucide-react', () => ({
 describe('Header Component', () => {
   it('renderiza el título principal con enlace a la página de inicio', () => {
     render(<Header />)
-    const title = screen.getByText('The Chronicle')
+    const title = screen.getByText('Yuyariy')
     expect(title).toBeInTheDocument()
     expect(title).toHaveAttribute('href', '/')
   })
