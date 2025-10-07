@@ -25,7 +25,7 @@ jobs:
 
       # Solo para verificar la estructura
       - name: Check repo structure
-        run: ls -R src
+        run: ls
 
       - name: Install dependencies
         run: pnpm ci
