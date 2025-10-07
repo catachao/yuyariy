@@ -17,7 +17,7 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="font-serif text-3xl font-bold tracking-tight text-foreground">
-            The Chronicle
+            Yuyariy
           </Link>
 
           {/* Desktop Navigation */}

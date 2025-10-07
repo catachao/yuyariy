@@ -1,0 +1,44 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - "src/frontent/**"
+  pull_request:
+    paths:
+      - "src/frontent/**"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/frontent
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Solo para verificar la estructura
+      - name: Check repo structure
+        run: ls
+        working-directory: src/frontent
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: src/frontent
+        
+
+      - name: Run tests (with verbose output)
+        run: |
+          echo "=== Running frontend tests ==="
+          pnpm run test
+        working-directory: src/frontent
+        
