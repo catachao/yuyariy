@@ -29,13 +29,16 @@ jobs:
       # Solo para verificar la estructura
       - name: Check repo structure
         run: ls
+        working-directory: src/frontent
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: src/frontent
         
 
       - name: Run tests (with verbose output)
         run: |
           echo "=== Running frontend tests ==="
           pnpm run test -- --verbose || true
+        working-directory: src/frontent
         
